@@ -1,5 +1,7 @@
 import { usePosts } from "../queries/posts";
 import { useUsers } from "../queries/users";
+import Post from "./Post";
+import UserBadge from "./UserBadge";
 
 export default function Posts() {
   const posts = usePosts();
@@ -13,16 +15,25 @@ export default function Posts() {
   }
   return (
     <div>
-      <h1>Users</h1>
-      <ul>
+      <h1 className="text-3xl">Users</h1>
+      <ul className="flex flex-wrap gap-2">
         {users.data.map((user) => (
-          <li key={user.id}>{user.name}</li>
+          <li key={user.id}>
+            <UserBadge username={user.name} />
+          </li>
         ))}
       </ul>
-      <h1>Posts</h1>
-      <ul>
+      <h1 className="text-3xl">Posts</h1>
+      <ul className="space-y-2">
         {posts.data.map((post) => (
-          <li key={post.id}>{post.title}</li>
+          <li key={post.id}>
+            <Post
+              username={
+                users.data.find((user) => user.id === post.userId)!.name
+              }
+              title={post.title}
+            />
+          </li>
         ))}
       </ul>
     </div>
