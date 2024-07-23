@@ -1,5 +1,5 @@
-import { useMemo, useState } from "react";
-import { usePosts } from "../queries/posts";
+import { useState } from "react";
+import { usePostsByUsers } from "../queries/posts";
 import { useUsers } from "../queries/users";
 import Post from "./Post";
 import UserBadge from "./UserBadge";
@@ -7,10 +7,10 @@ import MaterialSymbolsAccountBox from "~icons/material-symbols/account-box";
 import MaterialSymbolsArticle from "~icons/material-symbols/article";
 
 export default function Posts() {
-  const posts = usePosts();
-  const users = useUsers();
-
   const [selectedUserIds, setSelectedUserIds] = useState<number[]>([]);
+
+  const posts = usePostsByUsers(selectedUserIds);
+  const users = useUsers();
 
   const toggleSelectUser = (id: number) => {
     if (selectedUserIds.includes(id)) {
@@ -19,12 +19,6 @@ export default function Posts() {
       setSelectedUserIds([...selectedUserIds, id]);
     }
   };
-
-  const filteredPosts = useMemo(() => {
-    // Show all posts if no users are selected
-    if (selectedUserIds.length === 0) return posts.data;
-    return posts.data?.filter((post) => selectedUserIds.includes(post.userId));
-  }, [posts.data, selectedUserIds]);
 
   if (posts.isPending || users.isPending) {
     return <div className="grid min-h-0 place-items-center">Loading...</div>;
@@ -61,7 +55,7 @@ export default function Posts() {
         <MaterialSymbolsArticle /> Posts
       </h1>
       <ul className="max-h-full min-h-0 space-y-2 overflow-y-scroll rounded">
-        {filteredPosts!.map((post) => (
+        {posts.data.map((post) => (
           <li key={post.id}>
             <Post
               username={

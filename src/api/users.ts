@@ -11,7 +11,7 @@ const userArraySchema = z.array(userSchema);
 export type User = z.infer<typeof userSchema>;
 
 export async function getUsers(): Promise<User[]> {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
   if (!response.ok) {
     throw new Error(`Error fetching users. Status code: ${response.status}`);
   }
