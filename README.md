@@ -31,7 +31,9 @@ VITE_API_URL=https://jsonplaceholder.typicode.com
 ## Data Fetching
 
 `tanstack-query` aka React Query is used to handle request state. `fetch` api is used to make requests to JSONPlaceholder.
-`zod` is used to ensure type-safe data, since JSONPlaceholder does not provide types (no OpenApi spec / TypeScript client) (at least not officially)
+`zod` is used to ensure type-safe data, since JSONPlaceholder does not provide types (no OpenApi spec / TypeScript client) (at least not officially).
+
+Only necessary posts are fetched form the API. For example visiting `https://sk.krasnowski.dev/?userId=2` will only fetch posts for user with id = 2 (Ervin Howell). When you select user new data is fetched in the background and initial data is filtered on the client
 
 ## Styling
 
