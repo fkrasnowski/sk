@@ -1,30 +1,32 @@
-# React + TypeScript + Vite
+# Placeholder Posts
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple React SPA.
 
-Currently, two official plugins are available:
+```sh
+// Install deps
+pnpm i
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+// Run dev
+pnpm dev
 
-## Expanding the ESLint configuration
+// Build
+pnpm build
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json', './tsconfig.app.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
+// Run e2e tests (you need to build first before running)
+pnpm test
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+# Stack
+
+## Data Fetching
+
+`tanstack-query` aka React Query is used to handle request state. `fetch` api is used to make requests to JSONPlaceholder.
+`zod` is used to ensure type-safe data, since JSONPlaceholder does not provide types (no OpenApi spec / TypeScript client) (at least not officially)
+
+## Styling
+
+`tailwindcss` is used as css framework - it's great for quick demo projects
+
+## e2e testing 
+
+UI tests are written in `playwright`
