@@ -72,6 +72,9 @@ importers:
       eslint-plugin-react-refresh:
         specifier: ^0.4.7
         version: 0.4.9(eslint@8.57.0)
+      playwright:
+        specifier: ^1.45.3
+        version: 1.45.3
       postcss:
         specifier: ^8.4.39
         version: 8.4.39

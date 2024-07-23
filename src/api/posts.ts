@@ -6,7 +6,6 @@ const postSchema = z.object({
   id: z.number(),
   title: z.string(),
   body: z.string(),
-  z: z.string(),
 });
 
 const postArraySchema = z.array(postSchema);

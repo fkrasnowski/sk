@@ -8,7 +8,7 @@ export default function UserBadge({
   onChange: () => void;
 }) {
   return (
-    <label className="cursor-pointer">
+    <label className="cursor-pointer" aria-label={username}>
       <input
         type="checkbox"
         className="peer hidden"

@@ -27,7 +27,10 @@ export default function Posts() {
   if (posts.isPending || users.isPending) {
     return (
       <div className="grid h-full min-h-0 place-items-center">
-        <HumbleiconsSpinnerDots className="animate-spin text-5xl" />
+        <HumbleiconsSpinnerDots
+          id="spinner"
+          className="animate-spin text-5xl"
+        />
       </div>
     );
   }
@@ -41,10 +44,10 @@ export default function Posts() {
   }
   return (
     <div className="flex min-h-0 flex-col gap-4">
-      <h1 className="flex gap-2 text-3xl">
+      <h2 className="flex gap-2 text-3xl">
         <MaterialSymbolsAccountBox />
         Users
-      </h1>
+      </h2>
       <p>Select users to filter posts</p>
       <ul className="-ml-6 flex min-h-11 w-screen gap-2 overflow-x-scroll px-6 md:m-0 md:min-h-max md:w-full md:flex-wrap md:overflow-x-visible md:p-0">
         <li>
@@ -64,15 +67,15 @@ export default function Posts() {
           </li>
         ))}
       </ul>
-      <h1 className="flex items-center gap-2 text-3xl">
+      <h2 className="flex items-center gap-2 text-3xl">
         <MaterialSymbolsArticle /> Posts{" "}
         <span className="grid h-min place-items-center rounded-full bg-gray-700 px-4 text-base text-white">
           {posts.data.length}
         </span>
-        {posts.isFetching && (
+        {posts.isFetching || (
           <HumbleiconsSpinnerDots className="animate-spin" />
         )}
-      </h1>
+      </h2>
       <ul className="max-h-full min-h-0 space-y-2 overflow-y-scroll rounded">
         {posts.data.map((post) => (
           <li key={post.id}>

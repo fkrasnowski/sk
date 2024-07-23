@@ -7,3 +7,11 @@ test("has heading", async ({ page }) => {
 
   await expect(heading).toContainText("Placeholder Posts");
 });
+
+test("loading state", async ({ page }) => {
+  await page.goto("http://localhost:4173/");
+
+  const loading = page.locator("#spinner");
+
+  await expect(loading).toHaveClass(/animate-spin/);
+});
