@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { validateSchema } from "./validation";
 
 const userSchema = z.object({
   id: z.number(),
@@ -17,5 +18,5 @@ export async function getUsers(): Promise<User[]> {
   }
   const json = await response.json();
 
-  return userArraySchema.parse(json);
+  return validateSchema(userArraySchema, json);
 }

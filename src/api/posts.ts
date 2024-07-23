@@ -1,10 +1,12 @@
 import { z } from "zod";
+import { validateSchema } from "./validation";
 
 const postSchema = z.object({
   userId: z.number(),
   id: z.number(),
   title: z.string(),
   body: z.string(),
+  z: z.string(),
 });
 
 const postArraySchema = z.array(postSchema);
@@ -17,7 +19,7 @@ export async function getPosts(): Promise<Post[]> {
     throw new Error(`Error fetching posts. Status code: ${response.status}`);
   }
   const json = await response.json();
-  return postArraySchema.parse(json);
+  return validateSchema(postArraySchema, json);
 }
 
 export async function getPostsByUsers(
@@ -36,5 +38,6 @@ export async function getPostsByUsers(
     throw new Error(`Error fetching posts. Status code: ${response.status}`);
   }
   const json = await response.json();
-  return postArraySchema.parse(json);
+
+  return validateSchema(postArraySchema, json);
 }

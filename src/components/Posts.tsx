@@ -5,6 +5,7 @@ import UserBadge from "./UserBadge";
 import MaterialSymbolsAccountBox from "~icons/material-symbols/account-box";
 import MaterialSymbolsArticle from "~icons/material-symbols/article";
 import HumbleiconsSpinnerDots from "~icons/humbleicons/spinner-dots";
+import MaterialSymbolsErrorCircleRounded from "~icons/material-symbols/error-circle-rounded";
 import { useSearchParam } from "../utils/searchParams";
 
 export default function Posts() {
@@ -24,10 +25,19 @@ export default function Posts() {
   };
 
   if (posts.isPending || users.isPending) {
-    return <div className="grid min-h-0 place-items-center">Loading...</div>;
+    return (
+      <div className="grid h-full min-h-0 place-items-center">
+        <HumbleiconsSpinnerDots className="animate-spin text-5xl" />
+      </div>
+    );
   }
   if (posts.error || users.error) {
-    return <div>{posts.error?.message || users.error?.message}</div>;
+    return (
+      <div className="flex h-full min-h-0 flex-col items-center justify-center gap-6 rounded bg-red-300">
+        <MaterialSymbolsErrorCircleRounded className="text-5xl" />
+        {posts.error?.message || users.error?.message}
+      </div>
+    );
   }
   return (
     <div className="flex min-h-0 flex-col gap-4">
