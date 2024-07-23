@@ -21,6 +21,9 @@ importers:
         specifier: ^3.23.8
         version: 3.23.8
     devDependencies:
+      '@iconify-json/humbleicons':
+        specifier: ^1.1.10
+        version: 1.1.10
       '@iconify-json/material-symbols':
         specifier: ^1.1.82
         version: 1.1.82
@@ -375,6 +378,9 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     deprecated: Use @eslint/object-schema instead
+
+  '@iconify-json/humbleicons@1.1.10':
+    resolution: {integrity: sha512-oOOjBoTlFStUzglkpMTeFVo1pxfz02pOkRBYMAZG3R2dAhZjo8d+R3FbEDBfvraRNRmQxSakTVDgPyyCoSNHhQ==}
 
   '@iconify-json/material-symbols@1.1.82':
     resolution: {integrity: sha512-E67LgMFiAbEVF7rE38ulZU6NeXcPvayFF4hUUqt3g33tWrLsDNqEFTSsPt03l34rH5uGGtHIakTqtBlZ+/hRkw==}
@@ -2036,6 +2042,10 @@ snapshots:
   '@humanwhocodes/module-importer@1.0.1': {}
 
   '@humanwhocodes/object-schema@2.0.3': {}
+
+  '@iconify-json/humbleicons@1.1.10':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/material-symbols@1.1.82':
     dependencies:

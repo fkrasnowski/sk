@@ -20,12 +20,25 @@ export function usePostsByUsers(userIds: number[]) {
           JSON.stringify(query.queryKey[1]) == JSON.stringify(userIds),
       });
 
-      return getPostsByUsers(userIds, signal);
+      const posts = await getPostsByUsers(userIds, signal);
+
+      // Update the posts in the cache
+      queryClient.setQueryData(["posts"], (prev?: Post[]) => {
+        const newPosts = [...(prev ?? [])];
+        for (const post of posts) {
+          if (!newPosts.some((p) => p.id === post.id)) {
+            newPosts.push(post);
+          }
+        }
+        return newPosts.sort((a, b) => a.userId - b.userId);
+      });
+
+      return posts;
     },
 
     initialData: useCallback(() => {
       const posts = queryClient.getQueryData<Post[]>(["posts"]);
-      if (!posts) return;
+      if (!posts) return [];
       // Return all posts if no users are selected
       if (userIds.length === 0) return posts;
       return posts.filter((post) => userIds.includes(post.userId));

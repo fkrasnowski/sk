@@ -1,22 +1,25 @@
-import { useState } from "react";
 import { usePostsByUsers } from "../queries/posts";
 import { useUsers } from "../queries/users";
 import Post from "./Post";
 import UserBadge from "./UserBadge";
 import MaterialSymbolsAccountBox from "~icons/material-symbols/account-box";
 import MaterialSymbolsArticle from "~icons/material-symbols/article";
+import HumbleiconsSpinnerDots from "~icons/humbleicons/spinner-dots";
+import { useSearchParam } from "../utils/searchParams";
 
 export default function Posts() {
-  const [selectedUserIds, setSelectedUserIds] = useState<number[]>([]);
+  const [selectedUserIds, setSelectedUserIds] = useSearchParam("userId");
 
-  const posts = usePostsByUsers(selectedUserIds);
+  const posts = usePostsByUsers(selectedUserIds.map(Number));
   const users = useUsers();
 
   const toggleSelectUser = (id: number) => {
-    if (selectedUserIds.includes(id)) {
-      setSelectedUserIds(selectedUserIds.filter((userId) => userId !== id));
+    if (selectedUserIds.includes(id.toString())) {
+      setSelectedUserIds(
+        selectedUserIds.filter((userId) => userId !== id.toString())
+      );
     } else {
-      setSelectedUserIds([...selectedUserIds, id]);
+      setSelectedUserIds([...selectedUserIds, id.toString()]);
     }
   };
 
@@ -45,14 +48,20 @@ export default function Posts() {
           <li key={user.id}>
             <UserBadge
               username={user.name}
-              isSelected={selectedUserIds.includes(user.id)}
+              isSelected={selectedUserIds.includes(user.id.toString())}
               onChange={() => toggleSelectUser(user.id)}
             />
           </li>
         ))}
       </ul>
-      <h1 className="flex gap-2 text-3xl">
-        <MaterialSymbolsArticle /> Posts
+      <h1 className="flex items-center gap-2 text-3xl">
+        <MaterialSymbolsArticle /> Posts{" "}
+        <span className="grid h-min place-items-center rounded-full bg-gray-700 px-4 text-base text-white">
+          {posts.data.length}
+        </span>
+        {posts.isFetching && (
+          <HumbleiconsSpinnerDots className="animate-spin" />
+        )}
       </h1>
       <ul className="max-h-full min-h-0 space-y-2 overflow-y-scroll rounded">
         {posts.data.map((post) => (

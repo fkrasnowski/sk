@@ -16,6 +16,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@iconify-json/humbleicons": "^1.1.10",
     "@iconify-json/material-symbols": "^1.1.82",
     "@iconify-json/mdi": "^1.1.67",
     "@svgr/core": "^8.1.0",
