@@ -16,6 +16,14 @@ pnpm build
 pnpm test
 ```
 
+## Environment Variables
+
+There's only one public env variable used:
+
+```ini
+VITE_API_URL=https://jsonplaceholder.typicode.com
+```
+
 # Stack
 
 ## Data Fetching
