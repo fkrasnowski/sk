@@ -7,6 +7,7 @@ import MaterialSymbolsArticle from "~icons/material-symbols/article";
 import HumbleiconsSpinnerDots from "~icons/humbleicons/spinner-dots";
 import MaterialSymbolsErrorCircleRounded from "~icons/material-symbols/error-circle-rounded";
 import { useSearchParam } from "../utils/searchParams";
+import { useCallback, startTransition } from "react";
 
 export default function Posts() {
   const [selectedUserIds, setSelectedUserIds] = useSearchParam("userId");
@@ -14,15 +15,28 @@ export default function Posts() {
   const posts = usePostsByUsers(selectedUserIds.map(Number));
   const users = useUsers();
 
-  const toggleSelectUser = (id: number) => {
-    if (selectedUserIds.includes(id.toString())) {
-      setSelectedUserIds(
-        selectedUserIds.filter((userId) => userId !== id.toString())
-      );
-    } else {
-      setSelectedUserIds([...selectedUserIds, id.toString()]);
-    }
-  };
+  const toggleSelectUser = useCallback(
+    (id?: number) => {
+      if (!id) return;
+      startTransition(() => {
+        if (selectedUserIds.includes(id.toString())) {
+          setSelectedUserIds(
+            selectedUserIds.filter((userId) => userId !== id.toString())
+          );
+        } else {
+          setSelectedUserIds([...selectedUserIds, id.toString()]);
+        }
+      });
+    },
+    [selectedUserIds]
+  );
+
+  const selectAllUsers = useCallback(() => setSelectedUserIds([]), []);
+
+  const getUserNameFromId = useCallback(
+    (id: number) => users.data?.find((user) => user.id === id)?.name ?? "",
+    [users.data]
+  );
 
   if (posts.isPending || users.isPending) {
     return (
@@ -54,15 +68,16 @@ export default function Posts() {
           <UserBadge
             username={"All"}
             isSelected={selectedUserIds.length === 0}
-            onChange={() => setSelectedUserIds([])}
+            onChange={selectAllUsers}
           />
         </li>
         {users.data.map((user) => (
           <li key={user.id}>
             <UserBadge
               username={user.name}
+              userId={user.id}
               isSelected={selectedUserIds.includes(user.id.toString())}
-              onChange={() => toggleSelectUser(user.id)}
+              onChange={toggleSelectUser}
             />
           </li>
         ))}
@@ -80,9 +95,7 @@ export default function Posts() {
         {posts.data.map((post) => (
           <li key={post.id}>
             <Post
-              username={
-                users.data.find((user) => user.id === post.userId)!.name
-              }
+              username={getUserNameFromId(post.userId)}
               title={post.title}
             />
           </li>
