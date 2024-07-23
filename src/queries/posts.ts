@@ -1,4 +1,4 @@
-import { useQuery, type QueryFunction } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getPosts, getPostsByUsers, type Post } from "../api/posts";
 import { queryClient } from "./client";
 import { useCallback } from "react";
