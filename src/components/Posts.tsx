@@ -3,6 +3,8 @@ import { usePosts } from "../queries/posts";
 import { useUsers } from "../queries/users";
 import Post from "./Post";
 import UserBadge from "./UserBadge";
+import MaterialSymbolsAccountBox from "~icons/material-symbols/account-box";
+import MaterialSymbolsArticle from "~icons/material-symbols/article";
 
 export default function Posts() {
   const posts = usePosts();
@@ -25,15 +27,19 @@ export default function Posts() {
   }, [posts.data, selectedUserIds]);
 
   if (posts.isPending || users.isPending) {
-    return <div>Loading...</div>;
+    return <div className="grid min-h-0 place-items-center">Loading...</div>;
   }
   if (posts.error || users.error) {
     return <div>{posts.error?.message || users.error?.message}</div>;
   }
   return (
-    <div>
-      <h1 className="text-3xl">Users</h1>
-      <ul className="flex flex-wrap gap-2">
+    <div className="flex min-h-0 flex-col gap-4">
+      <h1 className="flex gap-2 text-3xl">
+        <MaterialSymbolsAccountBox />
+        Users
+      </h1>
+      <p>Select users to filter posts</p>
+      <ul className="-ml-6 flex min-h-11 w-screen gap-2 overflow-x-scroll px-6 md:m-0 md:min-h-max md:w-full md:flex-wrap md:overflow-x-visible md:p-0">
         <li>
           <UserBadge
             username={"All"}
@@ -51,8 +57,10 @@ export default function Posts() {
           </li>
         ))}
       </ul>
-      <h1 className="text-3xl">Posts</h1>
-      <ul className="space-y-2">
+      <h1 className="flex gap-2 text-3xl">
+        <MaterialSymbolsArticle /> Posts
+      </h1>
+      <ul className="max-h-full min-h-0 space-y-2 overflow-y-scroll rounded">
         {filteredPosts!.map((post) => (
           <li key={post.id}>
             <Post
