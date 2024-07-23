@@ -2,6 +2,8 @@
 
 This is a simple React SPA.
 
+Check out deployed app here: [sk.krasnowski.dev](https://sk.krasnowski.dev/)
+
 ```sh
 // Install deps
 pnpm i
