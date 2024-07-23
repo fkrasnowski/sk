@@ -72,7 +72,7 @@ export default function Posts() {
         <span className="grid h-min place-items-center rounded-full bg-gray-700 px-4 text-base text-white">
           {posts.data.length}
         </span>
-        {posts.isFetching || (
+        {posts.isFetching && (
           <HumbleiconsSpinnerDots className="animate-spin" />
         )}
       </h2>
